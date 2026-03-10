@@ -57,8 +57,8 @@ function ExportSupportModal({
           </p>
           <p className="credits-modal-text">
             {isFirst
-              ? "That is an awesome start. I hope you enjoy using Terraink and keep creating map posters."
-              : "If Terraink helped you create this poster, consider supporting the project on Ko-fi."}
+              ? "That is an awesome start. I hope you enjoy using ChampMaps and keep creating map posters."
+              : "If ChampMaps helped you create this poster, consider supporting the project on Ko-fi."}
           </p>
           <p className="credits-modal-text">
             This was your poster <strong>#{posterNumber}</strong> 🎉

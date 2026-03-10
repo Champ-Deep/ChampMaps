@@ -1,6 +1,6 @@
 {
-  "name": "TerraInk",
-  "short_name": "TerraInk",
+  "name": "ChampMaps",
+  "short_name": "ChampMaps",
   "description": "Free map poster generator powered by OpenStreetMap data.",
   "start_url": "/",
   "display": "standalone",

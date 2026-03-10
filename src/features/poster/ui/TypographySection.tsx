@@ -34,7 +34,7 @@ function CreditsRemovalModal({
       >
         <div className="credits-modal-body">
           <p className="credits-modal-headline" id="credits-modal-title">
-            ✨ Wait! Did you know Terraink is open-source?
+            ✨ Wait! Did you know ChampMaps is open-source?
           </p>
           <p className="credits-modal-text">
             Keeping the credit visible helps more people find this tool and

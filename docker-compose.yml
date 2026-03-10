@@ -1,10 +1,10 @@
 services:
-  terraink:
+  champmaps:
     build:
       context: .
       dockerfile: Dockerfile
-    image: terraink:latest
-    container_name: terraink
+    image: champmaps:latest
+    container_name: champmaps
     ports:
       - "${APP_PORT:-7200}:80"
     restart: unless-stopped
