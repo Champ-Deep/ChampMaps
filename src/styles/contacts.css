@@ -1,0 +1,176 @@
+/* ── Contacts Section ── */
+
+.contacts-section {
+  padding: 0.75rem 0;
+}
+
+.contacts-section h3 {
+  margin: 0 0 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.contacts-description {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  opacity: 0.7;
+  line-height: 1.4;
+}
+
+.contacts-url-row {
+  display: flex;
+  gap: 0.375rem;
+  align-items: center;
+}
+
+.contacts-url-input {
+  flex: 1;
+  padding: 0.4rem 0.5rem;
+  font-size: 0.78rem;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  color: inherit;
+  outline: none;
+  min-width: 0;
+}
+
+.contacts-url-input:focus {
+  border-color: rgba(128, 128, 128, 0.6);
+}
+
+.contacts-url-input:disabled {
+  opacity: 0.5;
+}
+
+.contacts-btn {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+.contacts-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.contacts-btn--connect {
+  background: rgba(50, 180, 100, 0.8);
+  color: #fff;
+}
+
+.contacts-btn--connect:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.contacts-btn--disconnect {
+  background: rgba(200, 60, 60, 0.8);
+  color: #fff;
+}
+
+.contacts-btn--disconnect:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.contacts-btn--geocode {
+  margin-top: 0.375rem;
+  background: rgba(100, 130, 200, 0.8);
+  color: #fff;
+}
+
+.contacts-btn--geocode:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.contacts-error {
+  margin: 0.375rem 0 0;
+  font-size: 0.75rem;
+  color: #e55;
+}
+
+.contacts-status {
+  margin-top: 0.5rem;
+}
+
+.contacts-stats {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+}
+
+.contacts-stat {
+  opacity: 0.8;
+}
+
+.contacts-stat-count {
+  font-weight: 600;
+}
+
+.contacts-stat--resolved {
+  color: rgba(50, 180, 100, 0.9);
+}
+
+.contacts-stat--pending {
+  color: rgba(200, 180, 50, 0.9);
+}
+
+.contacts-stat--failed {
+  color: rgba(200, 60, 60, 0.9);
+}
+
+.contacts-loading {
+  margin: 0.25rem 0 0;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  font-style: italic;
+}
+
+/* ── Contact Popup ── */
+
+.contact-popup {
+  position: absolute;
+  z-index: 100;
+  background: rgba(15, 20, 30, 0.92);
+  color: #eee;
+  border-radius: 6px;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  pointer-events: none;
+  max-width: 220px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+.contact-popup p {
+  margin: 0;
+}
+
+.contact-popup-name {
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin-bottom: 0.15rem !important;
+}
+
+.contact-popup-company {
+  opacity: 0.75;
+  font-style: italic;
+}
+
+.contact-popup-email,
+.contact-popup-phone {
+  opacity: 0.7;
+}
+
+.contact-popup-address {
+  margin-top: 0.2rem !important;
+  opacity: 0.65;
+  font-size: 0.72rem;
+}

@@ -4,6 +4,7 @@ import type {
   MarkerIconDefinition,
   MarkerItem,
 } from "@/features/markers/domain/types";
+import type { Contact } from "@/features/contacts/domain/types";
 import {
   MAX_MARKER_SIZE,
   MIN_MARKER_SIZE,
@@ -59,6 +60,11 @@ export interface PosterState {
     city: boolean;
     country: boolean;
   };
+  contacts: Contact[];
+  contactsApiUrl: string;
+  contactsLoading: boolean;
+  contactsError: string;
+  contactsConnected: boolean;
 }
 
 /* ────── Actions ────── */
@@ -96,7 +102,12 @@ export type PosterAction =
       defaults: Partial<MarkerDefaults>;
       applyToMarkers?: boolean;
     }
-  | { type: "RESET_MARKER_DEFAULTS" };
+  | { type: "RESET_MARKER_DEFAULTS" }
+  | { type: "SET_CONTACTS"; contacts: Contact[] }
+  | { type: "SET_CONTACTS_API_URL"; url: string }
+  | { type: "SET_CONTACTS_LOADING"; loading: boolean }
+  | { type: "SET_CONTACTS_ERROR"; error: string }
+  | { type: "SET_CONTACTS_CONNECTED"; connected: boolean };
 
 /* ────── Reducer ────── */
 
@@ -352,6 +363,21 @@ export function posterReducer(
         })),
       };
     }
+
+    case "SET_CONTACTS":
+      return { ...state, contacts: action.contacts };
+
+    case "SET_CONTACTS_API_URL":
+      return { ...state, contactsApiUrl: action.url };
+
+    case "SET_CONTACTS_LOADING":
+      return { ...state, contactsLoading: action.loading };
+
+    case "SET_CONTACTS_ERROR":
+      return { ...state, contactsError: action.error };
+
+    case "SET_CONTACTS_CONNECTED":
+      return { ...state, contactsConnected: action.connected };
 
     default:
       return state;

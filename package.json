@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "showcase:grid": "node scripts/combine-showcase-grid.mjs"
+    "showcase:grid": "node scripts/combine-showcase-grid.mjs",
+    "api": "bun run server/index.ts"
   },
   "dependencies": {
     "maplibre-gl": "^5.19.0",

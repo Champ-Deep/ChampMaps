@@ -10,6 +10,7 @@ import LocationSection from "@/features/location/ui/LocationSection";
 import MapSettingsSection from "@/features/map/ui/MapSettingsSection";
 import MarkersSection from "@/features/markers/ui/MarkersSection";
 import TypographySection from "@/features/poster/ui/TypographySection";
+import ContactsSection from "@/features/contacts/ui/ContactsSection";
 import { DownloadIcon, LoaderIcon } from "@/shared/ui/Icons";
 
 import { themeOptions } from "@/features/theme/infrastructure/themeRepository";
@@ -305,6 +306,8 @@ export default function SettingsPanel() {
           onColorEditorActiveChange={setIsColorEditorActive}
         />
       )}
+
+      {!isAuxEditorActive && <ContactsSection />}
 
       {!isAuxEditorActive && (
         <TypographySection

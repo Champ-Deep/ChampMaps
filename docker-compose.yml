@@ -7,4 +7,18 @@ services:
     container_name: champmaps
     ports:
       - "${APP_PORT:-7200}:80"
+    depends_on:
+      - champmaps-api
+    restart: unless-stopped
+
+  champmaps-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    image: champmaps-api:latest
+    container_name: champmaps-api
+    environment:
+      - CONTACTS_API_PORT=7201
+    ports:
+      - "${CONTACTS_API_PORT:-7201}:7201"
     restart: unless-stopped

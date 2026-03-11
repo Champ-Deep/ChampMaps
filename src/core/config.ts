@@ -54,6 +54,9 @@ export const KOFI_URL = import.meta.env.VITE_KOFI_URL ?? "";
 export const APP_CREDIT_URL =
   import.meta.env.VITE_APP_CREDIT_URL ?? "champmaps.app";
 
+export const CONTACTS_API_URL =
+  import.meta.env.VITE_CONTACTS_API_URL ?? "";
+
 export interface FontOption {
   value: string;
   label: string;
