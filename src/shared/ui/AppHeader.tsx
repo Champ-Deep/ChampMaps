@@ -5,8 +5,8 @@ export default function AppHeader() {
     <header className="app-header">
       <div className="brand-row">
         <div className="brand-copy">
-          <p className="app-kicker">TerraInk: The Cartographic Poster Engine</p>
-          <h1>TerraInk</h1>
+          <p className="app-kicker">ChampMaps: Champion Your Maps</p>
+          <h1>ChampMaps</h1>
           <p className="app-copy">
             Build high-detail map posters from OpenStreetMap data with curated
             palettes, custom typography, and print-ready PNG & PDF output.
@@ -15,7 +15,7 @@ export default function AppHeader() {
         <img
           className="brand-logo"
           src="/assets/logo.png"
-          alt="TerraInk logo"
+          alt="ChampMaps logo"
         />
       </div>
       <InstallPrompt />

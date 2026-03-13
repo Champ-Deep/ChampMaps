@@ -10,6 +10,7 @@ import LocationSection from "@/features/location/ui/LocationSection";
 import MapSettingsSection from "@/features/map/ui/MapSettingsSection";
 import MarkersSection from "@/features/markers/ui/MarkersSection";
 import TypographySection from "@/features/poster/ui/TypographySection";
+import ContactsSection from "@/features/contacts/ui/ContactsSection";
 import { DownloadIcon, LoaderIcon } from "@/shared/ui/Icons";
 
 import { themeOptions } from "@/features/theme/infrastructure/themeRepository";
@@ -57,8 +58,8 @@ function ExportSupportModal({
           </p>
           <p className="credits-modal-text">
             {isFirst
-              ? "That is an awesome start. I hope you enjoy using Terraink and keep creating map posters."
-              : "If Terraink helped you create this poster, consider supporting the project on Ko-fi."}
+              ? "That is an awesome start. I hope you enjoy using ChampMaps and keep creating map posters."
+              : "If ChampMaps helped you create this poster, consider supporting the project on Ko-fi."}
           </p>
           <p className="credits-modal-text">
             This was your poster <strong>#{posterNumber}</strong> 🎉
@@ -305,6 +306,8 @@ export default function SettingsPanel() {
           onColorEditorActiveChange={setIsColorEditorActive}
         />
       )}
+
+      {!isAuxEditorActive && <ContactsSection />}
 
       {!isAuxEditorActive && (
         <TypographySection

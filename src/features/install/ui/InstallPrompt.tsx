@@ -17,7 +17,7 @@ export default function InstallPrompt() {
             className="install-prompt-mobile-icon"
             aria-hidden="true"
           />
-          Add TerraInk to your home screen for quick access
+          Add ChampMaps to your home screen for quick access
         </span>
         <div className="install-prompt-actions">
           <button
@@ -51,7 +51,7 @@ export default function InstallPrompt() {
           <span className="install-prompt-share-icon" aria-hidden="true">
             <ShareIcon />
           </span>{" "}
-          then <strong>Add to Home Screen</strong> to install TerraInk for quick
+          then <strong>Add to Home Screen</strong> to install ChampMaps for quick
           access
         </span>
         <button

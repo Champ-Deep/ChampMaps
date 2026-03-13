@@ -1,7 +1,7 @@
 import type { ICache } from "./ports";
 
 const APP_VERSION = String(import.meta.env.VITE_APP_VERSION ?? "0.0.0").trim();
-const CACHE_PREFIX = `terraink:${APP_VERSION}:`;
+const CACHE_PREFIX = `champmaps:${APP_VERSION}:`;
 const DEFAULT_MAX_AGE_MS = 6 * 60 * 60 * 1000;
 
 export const localStorageCache: ICache = {

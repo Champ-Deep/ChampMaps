@@ -74,7 +74,7 @@ function HelpUsGrowSection({
     <section className="info-panel-section">
       <h3>Help Us Grow</h3>
       <p className="hug-copy">
-        Terraink is 100% client-side and open-source. Help us build the future
+        ChampMaps is 100% client-side and open-source. Help us build the future
         of map art by contributing to our roadmap!
       </p>
 
@@ -89,7 +89,7 @@ function HelpUsGrowSection({
                 href={repoUrl}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Open TerraInk repository on GitHub"
+                aria-label="Open ChampMaps repository on GitHub"
               >
                 <GitHubIcon className="badge-icon" />
                 <span>GitHub Repo</span>
@@ -106,7 +106,7 @@ function HelpUsGrowSection({
                 href={`${repoUrl}/stargazers`}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Star TerraInk on GitHub"
+                aria-label="Star ChampMaps on GitHub"
               >
                 <StarIcon className="badge-icon" />
                 <span>{starsText !== null ? starsText : "Star"}</span>
@@ -126,7 +126,7 @@ function HelpUsGrowSection({
                 href={kofiUrl}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Support TerraInk on Ko-fi"
+                aria-label="Support ChampMaps on Ko-fi"
               >
                 <CoffeeIcon className="badge-icon" />
                 <span>Support on Ko-fi</span>
@@ -152,7 +152,7 @@ function HelpUsGrowSection({
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label={`Follow TerraInk on ${label}`}
+                  aria-label={`Follow ChampMaps on ${label}`}
                   title={label}
                 >
                   <Icon className="social-icon" />

@@ -39,6 +39,7 @@ import {
   DEFAULT_DISTANCE_METERS,
   DEFAULT_LAT,
   DEFAULT_LON,
+  CONTACTS_API_URL,
 } from "@/core/config";
 
 const defaultLayoutOption = getLayoutOption(defaultLayoutId);
@@ -97,6 +98,11 @@ const INITIAL_STATE: PosterState = {
     city: false,
     country: false,
   },
+  contacts: [],
+  contactsApiUrl: CONTACTS_API_URL,
+  contactsLoading: false,
+  contactsError: "",
+  contactsConnected: false,
 };
 
 /* ────── Context shape ────── */
