@@ -1,15 +1,28 @@
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useRef, useMemo, type CSSProperties } from "react";
 import maplibregl from "maplibre-gl";
-import type { StyleSpecification } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { MapInstanceRef } from "@/features/map/domain/types";
 import {
   MAP_CENTER_SYNC_EPSILON,
   MAP_ZOOM_SYNC_EPSILON,
 } from "@/features/map/infrastructure";
+import { generateMapStyle } from "@/features/map/infrastructure/maplibreStyle";
+import type { ResolvedTheme } from "@/features/theme/domain/types";
 
-interface MapPreviewProps {
-  style: StyleSpecification;
+export interface ChampMapProps {
+  theme: ResolvedTheme;
+  layerVisibility?: {
+    includeBuildings?: boolean;
+    includeWater?: boolean;
+    includeParks?: boolean;
+    includeAeroway?: boolean;
+    includeRail?: boolean;
+    includeRoads?: boolean;
+    includeRoadPath?: boolean;
+    includeRoadMinorLow?: boolean;
+    includeRoadOutline?: boolean;
+    distanceMeters?: number;
+  };
   center: [lon: number, lat: number];
   zoom: number;
   mapRef: MapInstanceRef;
@@ -24,14 +37,16 @@ interface MapPreviewProps {
 }
 
 /**
- * MapLibre preview wrapper.
+ * ChampMap: Clean, themeable standalone map component.
  *
  * - Keeps `preserveDrawingBuffer` enabled for export snapshots.
- * - Syncs controlled style/center/zoom from form state.
- * - Exposes full map instance via a shared ref for export/controls.
+ * - Accepts declarative theming props rather than a pre-computed maplibre style.
+ * - Internally orchestrates the map style to minimize unnecessary re-renders when parent state updates.
+ * - Syncs controlled center/zoom.
  */
-export default function MapPreview({
-  style,
+export default function ChampMap({
+  theme,
+  layerVisibility,
   center,
   zoom,
   mapRef,
@@ -43,7 +58,7 @@ export default function MapPreview({
   onMove,
   containerStyle,
   overzoomScale = 1,
-}: MapPreviewProps) {
+}: ChampMapProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const isSyncing = useRef(false);
   const hasMountedStyleRef = useRef(false);
@@ -51,6 +66,12 @@ export default function MapPreview({
   const onMoveRef = useRef(onMove);
   onMoveEndRef.current = onMoveEnd;
   onMoveRef.current = onMove;
+
+  // Memoize style generation internally to avoid re-rendering
+  // MapLibre when the parent component changes unrelated props.
+  const style = useMemo(() => {
+    return generateMapStyle(theme, layerVisibility);
+  }, [theme, layerVisibility]);
 
   useEffect(() => {
     if (!containerRef.current) return;

@@ -103,11 +103,11 @@ export function useExport() {
 
         const widthCm = Number(form.width) || DEFAULT_POSTER_WIDTH_CM;
         const heightCm = Number(form.height) || DEFAULT_POSTER_HEIGHT_CM;
-        const dpi = Number(form.dpi) || 300;
+        const dpi = 300;
         const widthInches = widthCm / CM_PER_INCH;
         const heightInches = heightCm / CM_PER_INCH;
 
-        const size = resolveCanvasSize(widthInches, heightInches, dpi);
+        const size = resolveCanvasSize(widthInches, heightInches);
 
         const lat = Number(form.latitude) || 0;
         const lon = Number(form.longitude) || 0;
