@@ -24,7 +24,18 @@ Cross-cutting concerns live outside features:
 - **`core/`** — `ICache`, `IHttp`, `IFontLoader` ports and their adapters. `config.ts` for env vars. `services.ts` wires all adapters into named singletons consumed by application hooks.
 - **`shared/`** — reusable geo math, utility functions, and UI atoms (icons, modals) used across features.
 - **`data/`** — static JSON data files (themes, layouts).
-- **`styles/`** — global CSS only (7 files). Responsive breakpoints at `≤980px` and `≤760px`.
+- **`styles/`** — global CSS (8 files). Responsive breakpoints at `≤980px` and `≤760px`.
+
+### Server-side API
+
+The Contacts API lives in `server/` and is a standalone Bun HTTP server, completely independent of the Vite frontend. It has its own directory structure:
+
+- **`server/store/`** — in-memory contact store and shared types.
+- **`server/services/`** — server-side Nominatim geocoder.
+- **`server/routes/`** — route handlers that return `Response` objects.
+- **`server/index.ts`** — `Bun.serve()` entry point with routing and CORS.
+
+**Do not import** from `src/` in `server/` files. The API server must not depend on React, Vite, or any browser API.
 
 ### Layer import rules
 
@@ -35,13 +46,14 @@ Cross-cutting concerns live outside features:
 | `infrastructure/`  | domain, shared, core                         | application, ui, React                 |
 | `ui/`              | domain, application, shared/ui, shared/utils | infrastructure directly                |
 | `core/services.ts` | infrastructure adapters                      | any feature (no circular deps)         |
+| `server/`          | only server-internal modules                 | anything in `src/`                     |
 
 ## State Management
 
 - **Single source of truth**: `PosterContext` — React Context + `useReducer`.
 - `posterReducer.ts` owns `PosterState`, `PosterForm`, and the `PosterAction` discriminated union.
 - **No prop drilling** — components call `usePosterContext()` directly.
-- Side-effect logic lives in application hooks: `useFormHandlers`, `usePosterGeneration`, `useExport`, `usePreviewRenderer`.
+- Side-effect logic lives in application hooks: `useFormHandlers`, `usePosterGeneration`, `useExport`, `usePreviewRenderer`, `useContacts`.
 
 ## TypeScript Rules
 
@@ -55,13 +67,15 @@ Cross-cutting concerns live outside features:
 - React components: `PascalCase.tsx`
 - Hooks: `useCamelCase.ts`
 - Utilities / pure functions: `camelCase.ts`
-- Port interfaces: `I` prefix — `ICache`, `IHttp`, `IGeocodePort`
+- Port interfaces: `I` prefix — `ICache`, `IHttp`, `IGeocodePort`, `IContactsPort`
 - CSS classes: `kebab-case`
 
 ## Environment Variables
 
 All `VITE_*` env vars are accessed **only** through `src/core/config.ts`. Never read `import.meta.env.*` anywhere else.
 See `.env.example` for the full list of supported variables.
+
+The Contacts API server reads `CONTACTS_API_PORT` from `process.env` directly (not through Vite).
 
 ## Contribution and Documentation Rules
 
@@ -79,3 +93,4 @@ See `.env.example` for the full list of supported variables.
 - ❌ Do not add CSS class names without a matching rule in `src/styles/`.
 - ❌ Do not bypass `PosterContext` by prop-drilling state more than one level deep.
 - ❌ Do not edit `bun.lock` or `package-lock.json` manually — run `bun install`.
+- ❌ Do not import from `src/` inside `server/` — the API server is independent of the frontend.

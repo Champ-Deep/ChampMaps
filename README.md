@@ -22,7 +22,73 @@
 - **Rich theme system** — choose from dozens of curated themes or build your own custom color palette
 - **Detailed map layers** — roads, water bodies, parks, and building footprints with per-layer styling
 - **Typography controls** — set city/country display labels and load any Google Fonts family
-- **High-resolution PNG export** — download a print-ready poster at any defined dimension
+- **High-resolution export** — download a print-ready poster as PNG, PDF, or SVG at any defined dimension
+- **Contacts API** — connect an external contact database to display all contacts as themed markers on the map, with automatic address geocoding
+
+## Contacts API
+
+ChampMaps includes a built-in REST API server that lets you connect any external contact database or CRM. The API accepts contact records, geocodes their addresses via Nominatim, and renders them as themed markers on the map.
+
+### Quick Start
+
+```bash
+# Start the API server (port 7201 by default)
+bun run api
+
+# Start the frontend (port 5173 by default)
+bun run dev
+```
+
+In the UI, open the **Contact Map** section in the settings panel, enter `http://localhost:7201`, and click **Connect**.
+
+### Importing Contacts
+
+```bash
+# Import contacts with address fields (geocoded automatically)
+curl -X POST http://localhost:7201/api/contacts \
+  -H 'Content-Type: application/json' \
+  -d '[
+    {"name": "Jane Doe", "company": "Acme", "city": "Berlin", "country": "Germany"},
+    {"name": "John Smith", "email": "john@example.com", "address": "350 Fifth Avenue, New York, NY"}
+  ]'
+
+# Import contacts with pre-resolved coordinates (no geocoding needed)
+curl -X POST http://localhost:7201/api/contacts \
+  -H 'Content-Type: application/json' \
+  -d '[{"name": "HQ Office", "lat": 48.8566, "lon": 2.3522}]'
+```
+
+### API Endpoints
+
+| Method | Endpoint | Description |
+| ------ | -------- | ----------- |
+| `POST` | `/api/contacts` | Import one or more contacts (accepts a single object or an array) |
+| `GET` | `/api/contacts` | List all contacts with their geocode status |
+| `GET` | `/api/contacts/:id` | Get a single contact by ID |
+| `DELETE` | `/api/contacts/:id` | Remove a single contact |
+| `DELETE` | `/api/contacts` | Remove all contacts |
+| `POST` | `/api/contacts/geocode` | Re-geocode all pending or failed contacts |
+| `GET` | `/api/health` | Health check |
+
+### Contact Input Fields
+
+| Field | Type | Required | Description |
+| ----- | ---- | -------- | ----------- |
+| `name` | string | yes | Display name |
+| `email` | string | no | Email address |
+| `phone` | string | no | Phone number |
+| `company` | string | no | Company name |
+| `lat` | number | no | Latitude (skips geocoding if both lat/lon are provided) |
+| `lon` | number | no | Longitude |
+| `address` | string | no | Full address string for geocoding |
+| `street` | string | no | Street address |
+| `city` | string | no | City |
+| `state` | string | no | State or region |
+| `country` | string | no | Country |
+| `zip` | string | no | Postal code |
+| `id` | string | no | External ID (auto-generated if omitted) |
+
+The API uses **smart fallback**: if `lat` and `lon` are both present, they are used directly. Otherwise, the address fields (`address`, or `street`/`city`/`state`/`country`/`zip`) are geocoded via Nominatim.
 
 ## Data Providers and Mapping Stack
 
@@ -54,9 +120,22 @@ bun install
 bun run dev
 ```
 
+To also start the Contacts API server:
+
+```bash
+bun run api
+```
+
 ## Environment
 
 Check [`.env.example`](./.env.example) for available variables. They are optional for most local work and should not be set during testing unless a specific case requires them.
+
+Key environment variables for the Contacts API:
+
+| Variable | Default | Description |
+| -------- | ------- | ----------- |
+| `CONTACTS_API_PORT` | `7201` | Port for the Contacts API server |
+| `VITE_CONTACTS_API_URL` | (empty) | URL the frontend uses to connect to the Contacts API |
 
 ## Build
 
@@ -66,6 +145,8 @@ bun run build
 
 ## Deploy with Docker (Self-Hosting)
 
+Docker Compose runs two services: the frontend (Nginx on port 7200) and the Contacts API server (Bun on port 7201). Nginx proxies `/api/` requests to the API service automatically.
+
 ### 1) Build and run with Docker Compose
 
 Create `.env` from `.env.example` (or set `APP_PORT` directly in your shell), then run:
@@ -74,7 +155,7 @@ Create `.env` from `.env.example` (or set `APP_PORT` directly in your shell), th
 docker compose up -d --build
 ```
 
-This serves the app on `http://localhost:7200` by default.
+This serves the app on `http://localhost:7200` and the Contacts API on `http://localhost:7201` by default.
 
 To change the exposed host port:
 
@@ -100,8 +181,13 @@ docker compose down
 ### 3) Optional: build and run without Compose
 
 ```bash
+# Frontend
 docker build -t champmaps:latest .
 docker run -d --name champmaps -p 7200:80 --restart unless-stopped champmaps:latest
+
+# Contacts API
+docker build -f Dockerfile.api -t champmaps-api:latest .
+docker run -d --name champmaps-api -p 7201:7201 --restart unless-stopped champmaps-api:latest
 ```
 
 ## Contributing
