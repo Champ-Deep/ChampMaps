@@ -7,7 +7,7 @@ import {
 } from "react";
 import { usePosterContext } from "./PosterContext";
 import { useMapSync } from "@/features/map/application/useMapSync";
-import MapPreview from "@/features/map/ui/MapPreview";
+import ChampMap from "@/shared/ui/Map/ChampMap";
 import MarkerOverlay from "@/features/markers/ui/MarkerOverlay";
 import GradientFades from "./GradientFades";
 import PosterTextOverlay from "./PosterTextOverlay";
@@ -48,7 +48,7 @@ const DEFAULT_LOCATION_LABEL =
   "Hanover, Region Hannover, Lower Saxony, Germany";
 
 export default function PreviewPanel() {
-  const { state, dispatch, effectiveTheme, mapStyle, mapRef } = usePosterContext();
+  const { state, dispatch, effectiveTheme, mapRef } = usePosterContext();
   const { form, selectedLocation, userLocation } = state;
   const hasVisibleMarkers = form.showMarkers && state.markers.length > 0;
   const isMarkerEditorActive = state.isMarkerEditorActive;
@@ -310,8 +310,20 @@ export default function PreviewPanel() {
             } as CSSProperties
           }
         >
-          <MapPreview
-            style={mapStyle}
+          <ChampMap
+            theme={effectiveTheme}
+            layerVisibility={{
+              includeBuildings: form.includeBuildings,
+              includeWater: form.includeWater,
+              includeParks: form.includeParks,
+              includeAeroway: form.includeAeroway,
+              includeRail: form.includeRail,
+              includeRoads: form.includeRoads,
+              includeRoadPath: form.includeRoadPath,
+              includeRoadMinorLow: form.includeRoadMinorLow,
+              includeRoadOutline: form.includeRoadOutline,
+              distanceMeters: Number(form.distance),
+            }}
             center={mapCenter}
             zoom={mapZoom}
             mapRef={mapRef}
