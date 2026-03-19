@@ -1,5 +1,3 @@
-![](./public/assets/banner.jpg)
-
 # ChampMaps
 
 [![Bun Badge](https://img.shields.io/badge/Bun-000?logo=bun&logoColor=fff&style=for-the-badge)](https://bun.sh)
